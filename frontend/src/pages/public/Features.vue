@@ -74,7 +74,7 @@
             <div class="lg:w-1/2">
               <div class="bg-white/5 backdrop-blur-sm border border-gray-700/30 rounded-xl overflow-hidden">
                 <img 
-                  src="../../assets/images/notification.png" 
+                  src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=1200&q=80" 
                   alt="Alert notifications preview" 
                   class="w-full h-auto"
                 >
@@ -117,7 +117,7 @@
             <div class="lg:w-1/2">
               <div class="bg-white/5 backdrop-blur-sm border border-gray-700/30 rounded-xl overflow-hidden">
                 <img 
-                  src="../../assets/images/dashboard preview.png" 
+                  src="https://images.unsplash.com/photo-1551281044-8d8d0d8f9b56?auto=format&fit=crop&w=1200&q=80" 
                   alt="Analytics dashboard preview" 
                   class="w-full h-auto"
                 >
