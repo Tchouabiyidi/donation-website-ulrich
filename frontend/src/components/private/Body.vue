@@ -1,6 +1,6 @@
 <template>
     <main
-      class="flex-1 transition-all duration-300 overflow-y-auto bg-gray-100 min-h-screen mt-16"
+      class="flex-1 transition-all duration-300 overflow-y-auto bg-black min-h-screen mt-16"
       :class="{
         'ml-72': !isSidebarCollapsed && !isMobile,
         'ml-0': isSidebarCollapsed || isMobile,

@@ -1,0 +1,23 @@
+# Ignore local environment files
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtualenv
+venv/
+.envrc
+
+# Django
+staticfiles/
+media/
+
+# IDE
+.vscode/
+*.swp
+.idea/
