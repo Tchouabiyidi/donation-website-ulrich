@@ -19,7 +19,7 @@ import AdminCampaignVerify from '../pages/private/AdminCampaignVerify.vue';
 import AdminStatistics from '../pages/private/AdminStatistics.vue';
 import about from '../pages/public/About.vue';
 import contact from "../pages/public/Contact.vue";
-import Features from '../pages/public/Features.vue';
+
 import landing from '../pages/public/Landing.vue';
 import login from '../pages/public/Login.vue';
 import signup from '../pages/public/signup.vue';
@@ -153,11 +153,7 @@ const routes = [
         name:"contact",
         component: contact,
       },
-      {
-        path:"/features",
-        name:"features",
-        component: Features,
-      },
+    
       {
         path:"/impact",
         name:"impact",

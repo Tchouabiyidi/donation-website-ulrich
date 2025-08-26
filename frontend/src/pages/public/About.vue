@@ -21,14 +21,7 @@
         </div>
       </transition-group>
     </div>
-    <!-- Debug message to show current image and load status -->
-    <div class="absolute top-4 left-4 z-30 text-white text-sm">
-      Current Image: {{ images[currentImageIndex].src }} (Loaded: {{ images[currentImageIndex].loaded ? 'Yes' : 'No' }})
-    </div>
-    <!-- Fallback message if images fail to load -->
-    <div v-if="!images.length || images.every(img => !img.loaded)" class="fixed inset-0 z-0 flex items-center justify-center text-white text-lg bg-gray-900">
-      No images loaded. Please check image URLs.
-    </div>
+   
 
     <!-- Hero Section -->
     <section class="relative bg-transparent pt-24 pb-12 sm:pt-32 sm:pb-16 z-10">

@@ -1,5 +1,5 @@
 <template>
-    <main class="min-h-screen pt-16 pb-12"> <!-- pt-16 accounts for fixed header -->
+    <main class="min-h-screen pt-16 pb-12 bg-black"> <!-- pt-16 accounts for fixed header -->
       <!-- Router view handles all page content -->
       <div class="container mx-auto px-4 sm:px-6 py-8">
         <router-view v-slot="{ Component }">

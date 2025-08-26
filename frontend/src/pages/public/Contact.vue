@@ -7,6 +7,7 @@
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
     </div>
+    
     <div class="fixed inset-0 z-0">
       <transition-group name="fade" tag="div" class="relative w-full h-full">
         <div
@@ -21,14 +22,7 @@
         </div>
       </transition-group>
     </div>
-    <!-- Debug message to show current image and load status -->
-    <div class="absolute top-4 left-4 z-40 text-white text-sm">
-      Current Image: {{ images[currentImageIndex].src }} (Loaded: {{ images[currentImageIndex].loaded ? 'Yes' : 'No' }})
-    </div>
-    <!-- Fallback message if images fail to load -->
-    <div v-if="!images.length || images.every(img => !img.loaded)" class="fixed inset-0 z-0 flex items-center justify-center text-white text-lg bg-gray-900">
-      No images loaded. Please check image URLs.
-    </div>
+    
 
     <!-- Hero Section -->
     <section class="relative bg-transparent pt-24 pb-12 sm:pt-32 sm:pb-16 z-20">
