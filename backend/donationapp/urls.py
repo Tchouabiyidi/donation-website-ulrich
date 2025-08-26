@@ -13,6 +13,9 @@ from .views import (
     NotificationListView,
     NotificationReadToggleView,
     NotificationDeleteView,
+    # Payments (Campay)
+    CampayCollectView,
+    CampayWebhookView,
 )
 
 urlpatterns = [
@@ -30,4 +33,7 @@ urlpatterns = [
     path('notifications/', NotificationListView.as_view(), name='notifications-list'),
     path('notifications/<int:pk>/toggle-read/', NotificationReadToggleView.as_view(), name='notifications-toggle-read'),
     path('notifications/<int:pk>/', NotificationDeleteView.as_view(), name='notifications-delete'),
+    # Payments - Campay
+    path('payments/campay/collect', CampayCollectView.as_view(), name='campay-collect'),
+    path('payments/campay/webhook/', CampayWebhookView.as_view(), name='campay-webhook'),
 ]

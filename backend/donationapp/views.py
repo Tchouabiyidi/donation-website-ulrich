@@ -7,6 +7,11 @@ from .serializers import UserSerializer, LoginSerializer, UserListSerializer, Ca
 from .models import Campaign, Notification
 from django.contrib.auth import login
 from django.contrib.auth import get_user_model
+import os
+import json
+import logging
+
+import requests
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -228,3 +233,92 @@ class CampaignApprovedListView(APIView):
         qs = Campaign.objects.filter(is_validated=True, is_active=True).order_by('-created_at')
         data = CampaignSerializer(qs, many=True).data
         return Response(data, status=status.HTTP_200_OK)
+
+
+# -----------------------------
+# Campay Integration (minimal)
+# -----------------------------
+
+logger = logging.getLogger(__name__)
+
+def _campay_config():
+    base_url = os.getenv('CAMPAY_BASE_URL', '').rstrip('/')
+    token = os.getenv('CAMPAY_ACCESS_TOKEN', '')
+    currency = os.getenv('CAMPAY_CURRENCY', 'XAF')
+    if not base_url or not token:
+        return None
+    return {
+        'base_url': base_url,
+        'token': token,
+        'currency': currency,
+    }
+
+
+class CampayCollectView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        cfg = _campay_config()
+        if not cfg:
+            return Response({'detail': 'Campay not configured. Missing CAMPAY_BASE_URL or CAMPAY_ACCESS_TOKEN.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        amount = request.data.get('amount')
+        msisdn = request.data.get('msisdn') or request.data.get('phone')
+        description = request.data.get('description', 'Donation')
+        currency = request.data.get('currency', cfg['currency'])
+        external_reference = request.data.get('reference')
+
+        if not amount or not msisdn:
+            return Response({'detail': 'amount and msisdn are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            payload = {
+                'amount': str(amount),
+                'from': str(msisdn),
+                'description': description,
+                'currency': currency,
+            }
+            if external_reference:
+                payload['external_reference'] = str(external_reference)
+
+            headers = {
+                'Authorization': f"Token {cfg['token']}",
+                'Content-Type': 'application/json',
+            }
+
+            # Common Campay path for collection is '/collect'
+            url = f"{cfg['base_url']}/collect"
+            resp = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30)
+            data = resp.json() if resp.content else {}
+            return Response({'status_code': resp.status_code, 'provider_response': data}, status=resp.status_code if 200 <= resp.status_code < 300 else status.HTTP_400_BAD_REQUEST)
+        except requests.RequestException as e:
+            logger.exception('Campay collect request failed')
+            return Response({'detail': 'Campay request failed', 'error': str(e)}, status=status.HTTP_502_BAD_GATEWAY)
+
+
+class CampayWebhookView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def post(self, request):
+        # Note: Signature verification depends on Campay webhook config.
+        # We accept and log the payload; add signature check if header/name provided.
+        try:
+            payload = request.data
+            # Raw body for auditing
+            try:
+                raw_body = request.body.decode('utf-8')
+            except Exception:
+                raw_body = None
+
+            # Optionally check signature header if present (e.g., 'X-Campay-Signature')
+            signature = request.headers.get('X-Campay-Signature') or request.headers.get('X-CAMPAY-SIGNATURE')
+            logger.info('Campay webhook received. Signature=%s Payload=%s Raw=%s', signature, payload, raw_body)
+
+            # TODO: implement strict signature verification when header/algorithm is confirmed.
+
+            # Respond 200 OK so Campay considers it delivered.
+            return Response({'received': True}, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.exception('Campay webhook handling failed')
+            return Response({'detail': 'Webhook processing error', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
