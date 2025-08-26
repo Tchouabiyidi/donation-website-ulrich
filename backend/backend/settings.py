@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import dj_database_url
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +32,29 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+# Hosts: prefer explicit env; otherwise derive safe defaults for Render
+allowed_hosts_env = os.getenv('ALLOWED_HOSTS')
+if allowed_hosts_env:
+    ALLOWED_HOSTS = [h.strip() for h in allowed_hosts_env.split(',') if h.strip()]
+else:
+    hosts: list[str] = []
+    # Render typically provides RENDER_EXTERNAL_URL or RENDER_EXTERNAL_HOSTNAME
+    render_url = os.getenv('RENDER_EXTERNAL_URL')
+    render_host = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+    if render_url:
+        try:
+            parsed = urlparse(render_url)
+            if parsed.hostname:
+                hosts.append(parsed.hostname)
+        except Exception:
+            pass
+    if render_host:
+        hosts.append(render_host)
+    # Local dev
+    hosts.extend(['localhost', '127.0.0.1'])
+    # Allow any Render subdomain as a fallback
+    hosts.append('.onrender.com')
+    ALLOWED_HOSTS = hosts
 
 
 # Application definition
@@ -68,8 +91,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL', 'True').lower() == 'true'
-# Optionally: CORS_ALLOWED_ORIGINS env comma list
+"""CORS configuration
+Priority order:
+1) If CORS_ALLOWED_ORIGINS provided, use it and disable allow-all.
+2) Else respect CORS_ALLOW_ALL_ORIGINS (or legacy CORS_ALLOW_ALL) env flag.
+"""
+# Read modern flag first, fall back to legacy env for backwards-compat
+cors_allow_all_flag = os.getenv('CORS_ALLOW_ALL_ORIGINS', os.getenv('CORS_ALLOW_ALL', 'True'))
+CORS_ALLOW_ALL_ORIGINS = str(cors_allow_all_flag).lower() == 'true'
+
 cors_origins = os.getenv('CORS_ALLOWED_ORIGINS')
 if cors_origins:
     CORS_ALLOW_ALL_ORIGINS = False
@@ -163,10 +193,33 @@ STORAGES = {
     },
 }
 
-# Trust Render/other origins for CSRF when provided
+# Trust Render/other origins for CSRF
 csrf_trusted = os.getenv('CSRF_TRUSTED_ORIGINS')
 if csrf_trusted:
     CSRF_TRUSTED_ORIGINS = [o.strip() for o in csrf_trusted.split(',') if o.strip()]
+else:
+    csrf_origins: list[str] = []
+    # Add origin derived from RENDER_EXTERNAL_URL
+    render_url = os.getenv('RENDER_EXTERNAL_URL')
+    if render_url:
+        try:
+            parsed = urlparse(render_url)
+            if parsed.scheme and parsed.hostname:
+                csrf_origins.append(f"{parsed.scheme}://{parsed.hostname}")
+        except Exception:
+            pass
+    # Optional FRONTEND_URL override (explicit origin, with scheme)
+    frontend_url = os.getenv('FRONTEND_URL')
+    if frontend_url:
+        try:
+            p = urlparse(frontend_url)
+            if p.scheme and p.hostname:
+                csrf_origins.append(f"{p.scheme}://{p.hostname}")
+        except Exception:
+            pass
+    # Allow any Render subdomain as a safe default for CSRF
+    csrf_origins.append('https://*.onrender.com')
+    CSRF_TRUSTED_ORIGINS = list(dict.fromkeys(csrf_origins))  # dedupe, preserve order
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
