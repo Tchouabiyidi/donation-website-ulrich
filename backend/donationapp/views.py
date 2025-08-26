@@ -286,8 +286,8 @@ class CampayCollectView(APIView):
                 'Content-Type': 'application/json',
             }
 
-            # Common Campay path for collection is '/collect'
-            url = f"{cfg['base_url']}/collect"
+            # Common Campay path for collection is '/collect/' (trailing slash avoids 301/302 redirect)
+            url = f"{cfg['base_url'].rstrip('/')}/collect/"
             resp = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30)
             data = resp.json() if resp.content else {}
             return Response({'status_code': resp.status_code, 'provider_response': data}, status=resp.status_code if 200 <= resp.status_code < 300 else status.HTTP_400_BAD_REQUEST)
