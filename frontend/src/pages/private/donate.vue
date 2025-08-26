@@ -167,6 +167,12 @@
                   </svg>
                   <p class="text-green-400 font-medium">Donation successful! Thank you for your support!</p>
                 </div>
+                <p v-if="serverMessage" class="text-green-300 text-sm mt-2 break-all">{{ serverMessage }}</p>
+              </div>
+
+              <!-- Error Message -->
+              <div v-if="serverError" class="mt-6 p-4 bg-red-900/50 border border-red-700 rounded-lg">
+                <p class="text-red-300 text-sm break-all">{{ serverError }}</p>
               </div>
             </form>
           </div>
@@ -178,6 +184,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import api from '../../lib/api'
 
 // Slideshow images from ContactPage.vue
 // const images = ref([
@@ -235,6 +242,8 @@ const formErrors = reactive({
 
 const isSubmitting = ref(false);
 const showSuccess = ref(false);
+const serverMessage = ref('')
+const serverError = ref('')
 
 const validateForm = () => {
   let isValid = true;
@@ -253,17 +262,34 @@ const clearError = (field) => {
 };
 
 const submitForm = async () => {
+  serverMessage.value = ''
+  serverError.value = ''
   if (!validateForm()) return;
 
   isSubmitting.value = true;
   try {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    showSuccess.value = true;
-    showSuccess.value = true;
+    // Normalize phone to MSISDN. If it doesn't start with country code, prepend 237 (Cameroon) as typical for XAF context.
+    const digits = String(form.phone || '').replace(/\D/g, '')
+    const msisdn = digits.startsWith('237') ? digits : `237${digits}`
+
+    const payload = {
+      amount: String(form.amount),
+      msisdn,
+      description: form.message?.trim() || `Donation by ${form.name}`,
+      reference: `don-${Date.now()}`,
+      currency: 'XAF',
+    }
+
+    const { data } = await api.post('/payments/campay/collect', payload)
+    // Expect provider_response in payload per backend
+    showSuccess.value = true
+    serverMessage.value = data?.provider_response ? JSON.stringify(data.provider_response) : 'Payment request sent. Follow instructions on your phone to approve.'
     resetForm();
-    setTimeout(() => showSuccess.value = false, 5000);
-  } catch (error) {
-    console.error('Error submitting donation:', error);
+    setTimeout(() => { showSuccess.value = false; serverMessage.value = '' }, 8000)
+  } catch (err) {
+    console.error('Error submitting donation:', err)
+    const msg = err?.response?.data || err?.message || 'Payment failed'
+    serverError.value = typeof msg === 'string' ? msg : JSON.stringify(msg)
   } finally {
     isSubmitting.value = false;
   }
