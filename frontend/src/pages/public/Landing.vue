@@ -211,19 +211,19 @@
     {
       title: "Clean Water Access",
       description: "Building wells and water purification systems to provide safe drinking water to remote communities.",
-      impact: "$50 provides clean water for 1 person for a year",
+      impact: "50000 FCFA provides clean water for 1 person for a year",
       icon: icons.water
     },
     {
       title: "Education for All",
       description: "Supporting schools, training teachers, and providing educational materials to children worldwide.",
-      impact: "$100 sponsors a child's education for 3 months",
+      impact: "60000 FCFAsponsors a child's education for 3 months",
       icon: icons.education
     },
     {
       title: "Healthcare Support",
       description: "Delivering medical supplies, training healthcare workers, and building clinics in underserved areas.",
-      impact: "$75 provides medical care for a family of 5",
+      impact: "30000 FCFA provides medical care for a family of 5",
       icon: icons.health
     }
   ]);
