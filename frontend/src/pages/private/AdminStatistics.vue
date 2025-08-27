@@ -25,7 +25,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
       <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-4">
         <div class="text-gray-400 text-xs">Total Donations</div>
-        <div class="text-2xl font-semibold mt-1">${{ kpis.totalDonations.toLocaleString() }}</div>
+        <div class="text-2xl font-semibold mt-1">XAF {{ kpis.totalDonations.toLocaleString() }}</div>
         <div class="text-xs mt-2" :class="kpis.trendDonations >= 0 ? 'text-green-400' : 'text-red-400'">
           {{ kpis.trendDonations >= 0 ? '+' : '' }}{{ kpis.trendDonations.toFixed(1) }}% vs prev
         </div>
@@ -39,7 +39,7 @@
       </div>
       <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-4">
         <div class="text-gray-400 text-xs">Avg. Donation</div>
-        <div class="text-2xl font-semibold mt-1">${{ kpis.avgDonation.toFixed(2) }}</div>
+        <div class="text-2xl font-semibold mt-1">XAF {{ Math.round(kpis.avgDonation).toLocaleString() }}</div>
         <div class="text-xs mt-2 text-gray-400">{{ kpis.totalDonationsCount }} donations</div>
       </div>
       <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-4">
@@ -76,8 +76,8 @@
               <div class="text-xs text-gray-400">{{ c.category }}</div>
             </div>
             <div class="text-right">
-              <div class="font-semibold">${{ c.raised.toLocaleString() }}</div>
-              <div class="text-xs text-gray-400">{{ Math.round((c.raised / c.goal) * 100) }}% of ${{ c.goal.toLocaleString() }}</div>
+              <div class="font-semibold">XAF {{ c.raised.toLocaleString() }}</div>
+              <div class="text-xs text-gray-400">{{ Math.round((c.raised / c.goal) * 100) }}% of XAF {{ c.goal.toLocaleString() }}</div>
             </div>
           </li>
         </ul>
@@ -105,7 +105,7 @@
             <tr v-for="d in donations" :key="d.id" class="border-t border-gray-800 hover:bg-gray-800/40">
               <td class="px-4 py-2">{{ d.donor }}</td>
               <td class="px-4 py-2">{{ d.campaign }}</td>
-              <td class="px-4 py-2 text-right">${{ d.amount.toFixed(2) }}</td>
+              <td class="px-4 py-2 text-right">XAF {{ Math.round(d.amount).toLocaleString() }}</td>
               <td class="px-4 py-2 text-right">{{ formatDate(d.date) }}</td>
               <td class="px-4 py-2 text-center">
                 <span :class="statusClass(d.status)" class="px-2 py-1 rounded text-xs border">{{ d.status }}</span>

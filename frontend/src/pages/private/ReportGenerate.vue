@@ -149,10 +149,10 @@ const campaigns = [
 ]
 
 const allRows = ref([
-  { id: 1, date: '2025-08-01', campaignId: 1, campaign: 'Clean Water Initiative', donor: 'Alice B.', amount: 50, status: 'Completed' },
-  { id: 2, date: '2025-08-03', campaignId: 2, campaign: 'School Supplies Drive', donor: 'John S.', amount: 20, status: 'Pending' },
-  { id: 3, date: '2025-08-05', campaignId: 3, campaign: 'Medical Aid Fund', donor: 'Nina K.', amount: 120, status: 'Completed' },
-  { id: 4, date: '2025-08-05', campaignId: 1, campaign: 'Clean Water Initiative', donor: 'Omar L.', amount: 75, status: 'Completed' },
+  { id: 1, date: '2025-08-01', campaignId: 1, campaign: 'Clean Water Initiative', donor: 'tchoua biyidi', amount: 1000, status: 'Completed' },
+  { id: 2, date: '2025-08-03', campaignId: 2, campaign: 'School Supplies Drive', donor: 'tekam urich', amount: 2000, status: 'Pending' },
+  { id: 3, date: '2025-08-05', campaignId: 3, campaign: 'Medical Aid Fund', donor: 'takeng yvan', amount: 500, status: 'Completed' },
+  { id: 4, date: '2025-08-05', campaignId: 1, campaign: 'Clean Water Initiative', donor: 'pharel', amount: 3000, status: 'Completed' },
 ])
 
 const filters = reactive({
@@ -228,14 +228,97 @@ function exportCSV() {
   URL.revokeObjectURL(url)
 }
 
-function exportPDF() {
-  // Stub: In real app, use a PDF library. For now, open print dialog.
-  window.print()
+async function exportPDF() {
+  if (!previewRows.value.length) return
+
+  try {
+    // Dynamic local imports ensure this works in production bundles
+    const { jsPDF } = await import('jspdf')
+    const autoTable = (await import('jspdf-autotable')).default
+
+    const doc = new jsPDF('p', 'pt', 'a4')
+
+    // Header
+    const title = 'Donation Report'
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(16)
+    doc.text(title, 40, 40)
+
+    // Subheader: generated at and filters
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(10)
+    const generatedAt = new Date().toLocaleString()
+    const filterLines = [
+      `Generated: ${generatedAt}`,
+      `Date Range: ${filters.start || '—'} to ${filters.end || '—'}`,
+      `Campaign: ${filters.campaignId ? (campaigns.find(c => c.id === filters.campaignId)?.name || filters.campaignId) : 'All campaigns'}`
+    ]
+    let cursorY = 60
+    filterLines.forEach(line => {
+      doc.text(line, 40, cursorY)
+      cursorY += 14
+    })
+
+    // Summary block
+    const sum = summary.value
+    const sumLines = [
+      `Total Donations: ${currency(sum.totalDonations)}`,
+      `Transactions: ${sum.transactions}`,
+      `Avg. Donation: ${currency(sum.avgDonation)}`,
+      `Campaigns: ${sum.campaignCount}`
+    ]
+    cursorY += 6
+    doc.setFont('helvetica', 'bold')
+    doc.text('Summary', 40, cursorY)
+    doc.setFont('helvetica', 'normal')
+    cursorY += 14
+    sumLines.forEach(line => {
+      doc.text(line, 40, cursorY)
+      cursorY += 14
+    })
+
+    // Table
+    const columns = [
+      { header: 'Date', dataKey: 'date' },
+      { header: 'Campaign', dataKey: 'campaign' },
+      { header: 'Donor', dataKey: 'donor' },
+      { header: 'Amount', dataKey: 'amount' },
+      { header: 'Status', dataKey: 'status' }
+    ]
+    const rows = previewRows.value.map(r => ({
+      date: r.date,
+      campaign: r.campaign,
+      donor: r.donor,
+      amount: currency(r.amount),
+      status: r.status
+    }))
+
+    const startY = cursorY + 10
+    // Use ESM API: call the imported autoTable helper
+    autoTable(doc, {
+      startY,
+      headStyles: { fillColor: [30, 30, 30], textColor: 255 },
+      styles: { font: 'helvetica', fontSize: 9 },
+      theme: 'grid',
+      columns,
+      body: rows,
+      margin: { left: 40, right: 40 }
+    })
+
+    doc.save('donation-report.pdf')
+  } catch (e) {
+    console.error('PDF export error:', e)
+    alert('Failed to generate PDF report. See console for details.')
+  }
 }
 
 // Currency formatter filter-like helper
 function currency(value) {
-  return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(value || 0)
+  try {
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(value || 0)
+  } catch {
+    return `XAF ${Number(value || 0).toLocaleString()}`
+  }
 }
 </script>
 
@@ -244,7 +327,11 @@ function currency(value) {
 export default {
   filters: {
     currency(val) {
-      return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(val || 0)
+      try {
+        return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(val || 0)
+      } catch {
+        return `XAF ${Number(val || 0).toLocaleString()}`
+      }
     }
   }
 }

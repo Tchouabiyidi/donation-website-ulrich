@@ -229,7 +229,7 @@
                   id="invite-email" 
                   v-model="inviteEmail"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="user@example.com"
+                  placeholder="user@example.cm"
                 >
               </div>
               <div class="mb-4">
@@ -388,7 +388,7 @@
           {
             id: 1,
             name: 'John Smith',
-            email: 'john.smith@example.com',
+            email: 'john.smith@example.cm',
             avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
             role: 'admin',
             status: 'active',
@@ -397,7 +397,7 @@
           {
             id: 2,
             name: 'Sarah Johnson',
-            email: 'sarah.j@example.com',
+            email: 'sarah.j@example.cm',
             avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
             role: 'manager',
             status: 'active',
@@ -406,7 +406,7 @@
           {
             id: 3,
             name: 'Michael Brown',
-            email: 'michael.b@example.com',
+            email: 'michael.b@example.cm',
             avatar: 'https://randomuser.me/api/portraits/men/22.jpg',
             role: 'user',
             status: 'pending',
@@ -415,7 +415,7 @@
           {
             id: 4,
             name: 'Emily Davis',
-            email: 'emily.d@example.com',
+            email: 'emily.d@example.cm',
             avatar: 'https://randomuser.me/api/portraits/women/33.jpg',
             role: 'viewer',
             status: 'suspended',
@@ -424,7 +424,7 @@
           {
             id: 5,
             name: 'Robert Wilson',
-            email: 'robert.w@example.com',
+            email: 'robert.w@example.cm',
             avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
             role: 'user',
             status: 'active',

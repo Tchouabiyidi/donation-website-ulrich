@@ -49,7 +49,7 @@
               <tr v-for="(donation, index) in filteredDonations" :key="index" class="border-b border-gray-700 hover:bg-gray-700/50 transition-colors">
                 <td class="py-3 px-4">{{ donation.date }}</td>
                 <td class="py-3 px-4">{{ donation.campaign }}</td>
-                <td class="py-3 px-4">${{ donation.amount.toFixed(2) }}</td>
+                <td class="py-3 px-4">{{ formatCurrency(donation.amount) }}</td>
                 <td class="py-3 px-4">
                   <span :class="{
                     'text-green-400': donation.status === 'Completed',
@@ -94,6 +94,15 @@ const filteredDonations = computed(() => {
 const clearFilters = () => {
   filterStatus.value = '';
 };
+
+// Currency: XAF with no decimals
+function formatCurrency(value) {
+  try {
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(value || 0)
+  } catch {
+    return `XAF ${Number(value || 0).toLocaleString()}`
+  }
+}
 </script>
 
 <style scoped>

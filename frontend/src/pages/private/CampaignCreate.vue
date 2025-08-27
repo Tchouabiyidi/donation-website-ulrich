@@ -30,7 +30,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label class="block text-sm text-gray-300 mb-1">Goal Amount (USD)</label>
+            <label class="block text-sm text-gray-300 mb-1">Goal Amount (XAF)</label>
             <input v-model.number="form.goal" type="number" min="0" step="1" placeholder="50000" class="w-full bg-gray-900/70 border border-gray-800 rounded px-3 py-2 text-sm" />
           </div>
           <div>
@@ -80,7 +80,7 @@
               <button @click="addSuggest" type="button" class="px-3 py-2 rounded border border-gray-700 hover:bg-gray-800/60 text-sm">Add</button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
-              <span v-for="(s, i) in form.suggested" :key="i" class="px-2 py-1 text-xs bg-gray-800 border border-gray-700 rounded">${{ s }} <button @click="removeSuggest(i)" class="ml-1 text-gray-400 hover:text-red-400">×</button></span>
+              <span v-for="(s, i) in form.suggested" :key="i" class="px-2 py-1 text-xs bg-gray-800 border border-gray-700 rounded">{{ formatCurrency(s) }} <button @click="removeSuggest(i)" class="ml-1 text-gray-400 hover:text-red-400">×</button></span>
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@
                 <div class="h-full bg-yellow-500" :style="{ width: progress + '%' }"></div>
               </div>
               <div class="flex items-center justify-between text-xs text-gray-400 mt-1">
-                <div>${{ raised.toLocaleString() }} raised of ${{ (form.goal || 0).toLocaleString() }}</div>
+                <div>{{ formatCurrency(raised) }} raised of {{ formatCurrency(form.goal || 0) }}</div>
                 <div>{{ progress }}%</div>
               </div>
             </div>
@@ -156,6 +156,15 @@ const progress = computed(() => {
 })
 
 const coverStyle = computed(() => form.cover ? { backgroundImage: `url(${form.cover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {})
+
+// Currency: XAF formatting with no decimals
+function formatCurrency(value) {
+  try {
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(Number(value) || 0)
+  } catch {
+    return `XAF ${Number(value || 0).toLocaleString()}`
+  }
+}
 
 function onFile(e) {
   const file = e.target.files?.[0]

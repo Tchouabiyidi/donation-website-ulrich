@@ -93,7 +93,7 @@
                   type="email"
                   required
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="your.email@example.com"
+                  placeholder="you@example.cm"
                   :aria-invalid="formErrors.email ? 'true' : 'false'"
                   @input="clearError('email')"
                 />
@@ -107,7 +107,7 @@
                   id="phone"
                   type="tel"
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="+1 (555) 123-4567"
+                  placeholder="+237 650 000 000"
                 />
               </div>
 

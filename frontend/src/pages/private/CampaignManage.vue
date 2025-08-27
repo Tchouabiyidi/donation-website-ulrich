@@ -49,7 +49,7 @@
               <div class="text-xs text-gray-400">{{ c.category }}</div>
             </td>
             <td class="px-4 py-3">{{ c.owner }}</td>
-            <td class="px-4 py-3 text-right">${{ c.raised.toLocaleString() }} / ${{ c.goal.toLocaleString() }}</td>
+            <td class="px-4 py-3 text-right">XAF {{ c.raised.toLocaleString() }} / XAF {{ c.goal.toLocaleString() }}</td>
             <td class="px-4 py-3 text-center">
               <div class="w-32 h-2 bg-gray-800 rounded overflow-hidden inline-block align-middle">
                 <div class="h-full bg-yellow-500" :style="{ width: Math.min(100, Math.round((c.raised/c.goal)*100)) + '%' }"></div>

@@ -239,7 +239,11 @@ function badgeClass(status) {
 }
 
 function currency(value) {
-  return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(value || 0)
+  try {
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(value || 0)
+  } catch {
+    return `XAF ${Number(value || 0).toLocaleString()}`
+  }
 }
 
 function formatDate(value) {

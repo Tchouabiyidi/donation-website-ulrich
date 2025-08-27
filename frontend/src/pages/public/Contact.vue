@@ -116,7 +116,7 @@
                   type="email"
                   required
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="your.email@example.com"
+                  placeholder="your.email@example.cm"
                   :aria-invalid="formErrors.email ? 'true' : 'false'"
                   @input="clearError('email')"
                 />
@@ -130,7 +130,7 @@
                   id="phone"
                   type="tel"
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="+1 (555) 123-4567"
+                  placeholder="+237 650 000 000"
                 />
               </div>
 
@@ -274,9 +274,9 @@
                 </svg>
                 Emergency Contact
               </h3>
-              <p class="text-gray-300 mb-2">For urgent humanitarian crises or emergency donations:</p>
-              <p class="text-red-400 font-semibold text-lg">+1 (555) 911-HELP</p>
-              <p class="text-gray-400 text-sm">Available 24/7 for crisis response</p>
+              <p class="text-gray-300 mb-2">For urgent humanitarian crises or emergency donations within Cameroon:</p>
+              <p class="text-red-400 font-semibold text-lg">+237 652 000 000</p>
+              <p class="text-gray-400 text-sm">Available 24/7 (WAT)</p>
             </div>
           </div>
         </div>
@@ -503,31 +503,31 @@ const contactMethods = ref([
   {
     title: 'Call Us',
     description: 'Speak directly with our team',
-    contact: '+1 (234) 567-8900',
-    link: 'tel:+12345678900',
+    contact: '+237 650 000 000',
+    link: 'tel:+237650000000',
     icon: phoneIcon,
     linkClass: ''
   },
   {
     title: 'Email Us',
     description: 'Send us a detailed message',
-    contact: 'info@hopefoundation.org',
-    link: 'mailto:info@hopefoundation.org',
+    contact: 'info@hopefoundation.cm',
+    link: 'mailto:info@hopefoundation.cm',
     icon: emailIcon,
     linkClass: ''
   },
   {
-    title: 'Live Chat',
-    description: 'Get instant help online',
-    contact: 'Chat Now',
-    link: '#',
+    title: 'WhatsApp',
+    description: 'Chat with us on WhatsApp',
+    contact: '+237 651 111 111',
+    link: 'https://wa.me/237651111111',
     icon: chatIcon,
-    linkClass: 'cursor-pointer'
+    linkClass: ''
   },
   {
     title: 'Social Media',
     description: 'Follow us for updates',
-    contact: '@HopeFoundation',
+    contact: '@HopeFoundationCM',
     link: '#',
     icon: socialIcon,
     linkClass: ''
@@ -536,41 +536,41 @@ const contactMethods = ref([
 
 const offices = ref([
   {
-    name: 'Headquarters - New York',
+    name: 'Head Office - Yaoundé',
     address: [
-      '123 Hope Street',
-      'New York, NY 10001',
-      'United States'
+      'Rue 123, Bastos',
+      'Yaoundé, Centre Region',
+      'Cameroon'
     ],
-    phone: '+1 (234) 567-8900',
-    hours: 'Mon-Fri: 9:00 AM - 6:00 PM EST'
+    phone: '+237 650 000 000',
+    hours: 'Mon-Fri: 9:00 AM - 6:00 PM WAT'
   },
   {
-    name: 'West Coast Office - California',
+    name: 'Douala Office',
     address: [
-      '456 Mission Boulevard',
-      'San Francisco, CA 94103',
-      'United States'
+      'Boulevard de la Liberté',
+      'Douala, Littoral Region',
+      'Cameroon'
     ],
-    phone: '+1 (415) 555-0123',
-    hours: 'Mon-Fri: 9:00 AM - 6:00 PM PST'
+    phone: '+237 651 222 222',
+    hours: 'Mon-Fri: 9:00 AM - 6:00 PM WAT'
   },
   {
-    name: 'International Office - London',
+    name: 'Buea Outreach Center',
     address: [
-      '789 Charity Lane',
-      'London, SW1A 1AA',
-      'United Kingdom'
+      'Molyko, University Junction',
+      'Buea, South-West Region',
+      'Cameroon'
     ],
-    phone: '+44 20 7123 4567',
-    hours: 'Mon-Fri: 9:00 AM - 5:00 PM GMT'
+    phone: '+237 652 333 333',
+    hours: 'Mon-Fri: 9:00 AM - 5:00 PM WAT'
   }
 ]);
 
 const faqs = ref([
   {
     question: 'How can I make a donation?',
-    answer: 'You can donate online through our secure donation form, by phone at +1 (234) 567-8900, or by mail. We accept credit cards, PayPal, bank transfers, and checks. All donations are tax-deductible.',
+    answer: 'You can donate online through our secure donation form, by phone at +237 650 000 000, or via Mobile Money (MTN MoMo, Orange Money). We also accept bank transfers. Receipts are issued for all donations.',
     isOpen: false
   },
   {

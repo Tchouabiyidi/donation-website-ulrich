@@ -49,7 +49,7 @@
                 <div class="text-xs text-gray-400">{{ d.email }}</div>
               </td>
               <td class="px-4 py-2">{{ d.campaign }}</td>
-              <td class="px-4 py-2 text-right">${{ d.amount.toFixed(2) }}</td>
+              <td class="px-4 py-2 text-right">{{ formatCurrency(d.amount) }}</td>
               <td class="px-4 py-2 text-right">{{ formatDate(d.date) }}</td>
               <td class="px-4 py-2 text-center">
                 <span class="px-2 py-1 rounded text-xs border" :class="methodClass(d.method)">{{ d.method }}</span>
@@ -76,7 +76,7 @@
           <div class="flex justify-between"><span class="text-gray-400">Reference</span><span class="font-mono">{{ selected.reference }}</span></div>
           <div class="flex justify-between"><span class="text-gray-400">Donor</span><span>{{ selected.donor }} • {{ selected.email }}</span></div>
           <div class="flex justify-between"><span class="text-gray-400">Campaign</span><span>{{ selected.campaign }}</span></div>
-          <div class="flex justify-between"><span class="text-gray-400">Amount</span><span>${{ selected.amount.toFixed(2) }}</span></div>
+          <div class="flex justify-between"><span class="text-gray-400">Amount</span><span>{{ formatCurrency(selected.amount) }}</span></div>
           <div class="flex justify-between"><span class="text-gray-400">Date</span><span>{{ formatDate(selected.date) }}</span></div>
           <div class="flex justify-between"><span class="text-gray-400">Method</span><span class="px-2 py-0.5 rounded text-xs border" :class="methodClass(selected.method)">{{ selected.method }}</span></div>
           <div class="flex justify-between"><span class="text-gray-400">Status</span><span class="px-2 py-0.5 rounded text-xs border" :class="statusClass(selected.status)">{{ selected.status }}</span></div>
@@ -103,12 +103,12 @@
 import { reactive, ref, computed } from 'vue'
 
 const data = reactive([
-  { id: 1, donor: 'Alice Johnson', email: 'alice@example.com', campaign: 'Clean Water for All', amount: 120.5, date: '2025-08-18', status: 'completed', method: 'card', reference: 'DON-73A9' },
-  { id: 2, donor: 'Bob Smith', email: 'bob@example.com', campaign: 'Education First', amount: 75, date: '2025-08-18', status: 'completed', method: 'bank', reference: 'DON-019B' },
-  { id: 3, donor: 'Cynthia Ray', email: 'cynthia@example.com', campaign: 'Relief Fund', amount: 300, date: '2025-08-17', status: 'pending', method: 'card', reference: 'DON-88KF' },
-  { id: 4, donor: 'David Kim', email: 'david@example.com', campaign: 'Tree Planting', amount: 45, date: '2025-08-16', status: 'refunded', method: 'wallet', reference: 'DON-55MD' },
-  { id: 5, donor: 'Emma Stone', email: 'emma@example.com', campaign: 'Clean Water for All', amount: 220, date: '2025-08-15', status: 'failed', method: 'crypto', reference: 'DON-234Z' },
-  { id: 6, donor: 'Fred Moore', email: 'fred@example.com', campaign: 'Scholarship Drive', amount: 130, date: '2025-08-14', status: 'completed', method: 'card', reference: 'DON-77QQ' },
+  { id: 1, donor: 'Alice Johnson', email: 'alice@example.cm', campaign: 'Clean Water for All', amount: 120.5, date: '2025-08-18', status: 'completed', method: 'card', reference: 'DON-73A9' },
+  { id: 2, donor: 'Bob Smith', email: 'bob@example.cm', campaign: 'Education First', amount: 75, date: '2025-08-18', status: 'completed', method: 'bank', reference: 'DON-019B' },
+  { id: 3, donor: 'Cynthia Ray', email: 'cynthia@example.cm', campaign: 'Relief Fund', amount: 300, date: '2025-08-17', status: 'pending', method: 'card', reference: 'DON-88KF' },
+  { id: 4, donor: 'David Kim', email: 'david@example.cm', campaign: 'Tree Planting', amount: 45, date: '2025-08-16', status: 'refunded', method: 'wallet', reference: 'DON-55MD' },
+  { id: 5, donor: 'Emma Stone', email: 'emma@example.cm', campaign: 'Clean Water for All', amount: 220, date: '2025-08-15', status: 'failed', method: 'crypto', reference: 'DON-234Z' },
+  { id: 6, donor: 'Fred Moore', email: 'fred@example.cm', campaign: 'Scholarship Drive', amount: 130, date: '2025-08-14', status: 'completed', method: 'card', reference: 'DON-77QQ' },
 ])
 
 const query = ref('')
@@ -156,6 +156,15 @@ function statusClass(s) {
 }
 
 function formatDate(d) { return new Date(d).toLocaleDateString() }
+
+// Currency: XAF with no decimals
+function formatCurrency(value) {
+  try {
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(value || 0)
+  } catch {
+    return `XAF ${Number(value || 0).toLocaleString()}`
+  }
+}
 
 function resendReceipt(d) { alert(`Resent receipt to ${d.email} (stub)`) }
 function refund(d) { alert(`Refund initiated for ${d.reference} (stub)`) }

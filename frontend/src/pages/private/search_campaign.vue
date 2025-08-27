@@ -355,11 +355,11 @@ const donateToCampaign = (campaignId) => {
 }
 
 const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0
-  }).format(amount)
+  try {
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(amount || 0)
+  } catch {
+    return `XAF ${Number(amount || 0).toLocaleString()}`
+  }
 }
 
 const formatDate = (dateString) => {

@@ -103,7 +103,7 @@
                   type="email"
                   required
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="your.email@example.com"
+                  placeholder="your.email@example.cm"
                   :aria-invalid="formErrors.email ? 'true' : 'false'"
                   @input="clearError('email')"
                 />
@@ -119,7 +119,7 @@
                   type="tel"
                   required
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="e.g., 0700000000"
+                  placeholder="+237 650 000 000"
                   :aria-invalid="formErrors.phone ? 'true' : 'false'"
                   @input="clearError('phone')"
                 />
@@ -302,7 +302,7 @@ const resetForm = () => {
 
 function formatCfa(value) {
   try {
-    return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'XOF', maximumFractionDigits: 0 }).format(value);
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(value);
   } catch {
     return `${value} F CFA`;
   }
