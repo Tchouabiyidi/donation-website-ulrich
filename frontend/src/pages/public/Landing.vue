@@ -13,12 +13,6 @@
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
               <router-link 
-                to="/singup" 
-                class="px-8 py-4 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold rounded-lg transition-all duration-200 text-sm sm:text-base transform hover:scale-105 shadow-lg"
-              >
-                Donate Now
-              </router-link>
-              <router-link 
                 to="/about" 
                 class="px-8 py-4 bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-medium rounded-lg transition-all duration-200 text-sm sm:text-base"
               >
