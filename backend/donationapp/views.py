@@ -134,6 +134,52 @@ class UserDeleteView(APIView):
         return Response({'message': 'User deleted'}, status=status.HTTP_200_OK)
 
 
+class UserSuspendView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, pk: int):
+        """Suspend or activate a user by toggling or setting is_active.
+
+        Accepts:
+        - { "is_active": true|false }  (preferred)
+        - or { "action": "suspend"|"activate" }
+        - or no body to toggle current value
+        """
+        user = request.user
+        role = getattr(user, 'role', None)
+        if not (getattr(user, 'is_superuser', False) or role == 'superadmin'):
+            return Response({'detail': 'Not authorized'}, status=status.HTTP_403_FORBIDDEN)
+
+        User = get_user_model()
+        try:
+            target = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        if target.pk == user.pk:
+            return Response({'detail': 'You cannot change your own active state.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        body = request.data or {}
+        if 'is_active' in body:
+            new_state = bool(body.get('is_active'))
+        elif body.get('action') in ('suspend', 'deactivate'):
+            new_state = False
+        elif body.get('action') in ('activate', 'unsuspend', 'enable'):
+            new_state = True
+        else:
+            new_state = not target.is_active  # toggle
+
+        target.is_active = new_state
+        target.save(update_fields=['is_active'])
+
+        return Response({
+            'id': target.pk,
+            'email': getattr(target, 'email', None),
+            'is_active': target.is_active,
+            'message': 'User activated' if target.is_active else 'User suspended',
+        }, status=status.HTTP_200_OK)
+
+
 class CampaignCreateView(APIView):
     permission_classes = [IsAuthenticated]
 

@@ -74,6 +74,7 @@
                       {{ u.active ? 'Deactivate' : 'Activate' }}
                     </button>
                     <button @click="resetPassword(u)" class="text-xs px-3 py-1.5 rounded border border-gray-700 text-gray-300 hover:bg-gray-700">Reset Password</button>
+                    <button @click="deleteUser(u)" class="text-xs px-3 py-1.5 rounded border border-red-700 text-red-300 hover:bg-red-900/30">Delete</button>
                   </div>
                 </td>
               </tr>
@@ -146,8 +147,21 @@ function changeRole(user) {
   console.log('Role changed', user.id, '->', user.role)
 }
 
-function toggleActive(user) {
-  user.active = !user.active
+async function toggleActive(user) {
+  const original = !!user.active
+  const desired = !original
+  // Optimistic UI update
+  user.active = desired
+  try {
+    await api.patch(`/users/${user.id}/suspend/`, { is_active: desired })
+    // Reflect in base list (users.value contains backend objects)
+    users.value = users.value.map(u => u.id === user.id ? { ...u, is_active: desired } : u)
+  } catch (e) {
+    // Revert UI on failure
+    user.active = original
+    console.error('Failed to change active state', e?.response?.data || e)
+    alert(e?.response?.data?.detail || e?.response?.data?.message || e?.message || 'Operation failed')
+  }
 }
 
 function resetPassword(user) {
