@@ -32,7 +32,7 @@
     <!-- Table -->
     <div class="bg-gray-900/60 border border-gray-800 rounded-lg overflow-x-auto">
       <table class="min-w-full text-sm">
-        <thead class="bg-gray-900/60 text-gray-300">
+        <thead class="bg-yellow-600 text-gray-300">
           <tr>
             <th class="text-left px-4 py-2">Campaign</th>
             <th class="text-left px-4 py-2">Owner</th>

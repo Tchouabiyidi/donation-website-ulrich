@@ -21,7 +21,7 @@
         </div>
         <div>
           <h1 class="text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-            Hope Foundation</h1>
+            Care Cameroon</h1>
           <p class="text-xs text-gray-400">Changing Lives Together</p>
         </div>
       </div>

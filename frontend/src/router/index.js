@@ -182,29 +182,29 @@ function roleHome(role) {
 }
 
 // Global navigation guard for auth + role-based access
-router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
-  const isAuthed = !!userStore.token || !!userStore.user;
+// router.beforeEach((to, from, next) => {
+//   const userStore = useUserStore();
+//   const isAuthed = !!userStore.token || !!userStore.user;
 
-  // If trying to access admin area
-  if (to.path.startsWith('/admin')) {
-    if (!isAuthed) {
-      return next({ name: 'login', query: { redirect: to.fullPath } });
-    }
-    const role = userStore.user?.role;
-    // Check role permissions defined in route meta
-    const allowed = to.matched.some(r => !r.meta?.roles || r.meta.roles.includes(role));
-    if (!allowed) {
-      return next(roleHome(role));
-    }
-  }
+//   // If trying to access admin area
+//   if (to.path.startsWith('/admin')) {
+//     if (!isAuthed) {
+//       return next({ name: 'login', query: { redirect: to.fullPath } });
+//     }
+//     const role = userStore.user?.role;
+//     // Check role permissions defined in route meta
+//     const allowed = to.matched.some(r => !r.meta?.roles || r.meta.roles.includes(role));
+//     if (!allowed) {
+//       return next(roleHome(role));
+//     }
+//   }
 
-  // Prevent logged-in users from visiting login/signup
-  if ((to.name === 'login' || to.name === 'signup') && isAuthed) {
-    return next(roleHome(userStore.user?.role));
-  }
+//   // Prevent logged-in users from visiting login/signup
+//   if ((to.name === 'login' || to.name === 'signup') && isAuthed) {
+//     return next(roleHome(userStore.user?.role));
+//   }
 
-  next();
-});
+//   next();
+// });
 
 export default router;

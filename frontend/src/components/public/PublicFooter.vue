@@ -13,7 +13,7 @@
               </svg>
             </div>
             <div>
-              <h3 class="text-xl font-bold">Hope Foundation</h3>
+              <h3 class="text-xl font-bold">Care Cameroon</h3>
               <p class="text-sm text-yellow-400">Changing Lives Together</p>
             </div>
           </div>
@@ -144,7 +144,7 @@
       <div class="container mx-auto px-4 sm:px-6 py-6">
         <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div class="text-sm text-gray-400">
-            © {{ currentYear }} Hope Foundation. All rights reserved. 
+            © {{ currentYear }} Care Cameroon. All rights reserved. 
             <span class="text-yellow-400">501(c)(3) Non-Profit Organization</span>
           </div>
           

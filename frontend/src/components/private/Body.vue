@@ -1,13 +1,13 @@
 <template>
     <main
-      class="flex-1 transition-all duration-300 overflow-y-auto bg-black min-h-screen mt-16"
+      class="flex-1 transition-all duration-300 overflow-y-auto bg-gray-800 min-h-screen mt-16 text-gray-200"
       :class="{
         'ml-72': !isSidebarCollapsed && !isMobile,
         'ml-0': isSidebarCollapsed || isMobile,
         'w-full': isMobile
       }"
     >
-      <div class="max-w-7xl mx-auto p-6">
+      <div class="max-w-7xl mx-auto p-4 sm:p-6">
         <router-view />
       </div>
     </main>

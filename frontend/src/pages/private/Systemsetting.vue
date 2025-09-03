@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-1 flex flex-col overflow-hidden bg-gray-50">
+    <div class="flex-1 flex flex-col overflow-hidden ">
       <!-- Top Navigation -->
       <header class="bg-white shadow-sm z-10">
         <div class="flex items-center justify-between px-4 py-3 sm:px-6">

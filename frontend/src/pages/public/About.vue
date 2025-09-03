@@ -28,7 +28,7 @@
       <div class="container mx-auto px-4 sm:px-6">
         <div class="max-w-4xl mx-auto text-center">
           <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
-            About <span class="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Hope Foundation</span>
+            About <span class="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Care Cameroon</span>
           </h1>
           <p class="text-lg sm:text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
             For over 15 years, we've been dedicated to creating lasting change in communities around the world through sustainable programs that address the most pressing humanitarian needs.
@@ -71,7 +71,7 @@
             </h2>
             <div class="space-y-6 text-gray-300">
               <p class="text-lg leading-relaxed">
-                Hope Foundation was born from a simple yet powerful belief: every person deserves access to clean water, quality education, and basic healthcare. What started as a small group of volunteers in 2009 has grown into a global movement touching lives across four continents.
+                Care Cameroon was born from a simple yet powerful belief: every person deserves access to clean water, quality education, and basic healthcare. What started as a small group of volunteers in 2009 has grown into a global movement touching lives across four continents.
               </p>
               <p class="leading-relaxed">
                 Our founder, Dr. Sarah Martinez, witnessed firsthand the devastating impact of water scarcity during a medical mission in rural Guatemala. That experience ignited a passion that would eventually mobilize thousands of supporters and transform entire communities.
@@ -320,7 +320,7 @@ const teamMembers = ref([
   {
     name: "Dr. Sarah Martinez",
     position: "Founder & CEO",
-    bio: "A medical doctor with 20+ years in global health. Sarah's passion for humanitarian work led to the founding of Hope Foundation.",
+    bio: "A medical doctor with 20+ years in global health. Sarah's passion for humanitarian work led to the founding of Care Cameroon.",
     social: [
       { platform: "linkedin", url: "#" },
       { platform: "twitter", url: "#" }

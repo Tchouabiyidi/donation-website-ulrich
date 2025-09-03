@@ -575,7 +575,7 @@ const faqs = ref([
   },
   {
     question: 'Is my donation tax-deductible?',
-    answer: 'Yes! Hope Foundation is a registered 501(c)(3) non-profit organization. All donations are tax-deductible to the full extent allowed by law. You\'ll receive a tax receipt via email immediately after your donation.',
+    answer: 'Yes! Care Cameroon is a registered 501(c)(3) non-profit organization. All donations are tax-deductible to the full extent allowed by law. You\'ll receive a tax receipt via email immediately after your donation.',
     isOpen: false
   },
   {
@@ -584,7 +584,7 @@ const faqs = ref([
     isOpen: false
   },
   {
-    question: 'Can I volunteer with Hope Foundation?',
+    question: 'Can I volunteer with Care Cameroon?',
     answer: 'Absolutely! We offer both local and international volunteer opportunities. You can help with fundraising events, administrative tasks, or join our field missions. Visit our volunteer page or contact us to learn about current opportunities.',
     isOpen: false
   },

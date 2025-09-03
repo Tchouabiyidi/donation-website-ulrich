@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen  text-white pt-20">
+  <div class="min-h-screen  text-white pt-20 ">
     <div class="container mx-auto px-4 py-8">
       <!-- Header Section -->
       <div class="text-center mb-10">

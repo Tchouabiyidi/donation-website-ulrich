@@ -8,14 +8,9 @@
             class="flex items-center space-x-3 group"
             aria-label="Home"
           >
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
-              <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
             <div class="hidden xs:block sm:block">
-              <span class="text-xl font-bold text-white">Hope Foundation</span>
-              <div class="text-xs text-yellow-400 -mt-1">Changing Lives Together</div>
+              <span class="text-2xl font-extrabold text-yellow-400">Care Cameroon</span>
+              <div class="text-xs text-gray-300 -mt-1">Changing Lives Together</div>
             </div>
           </router-link>
 
@@ -108,15 +103,25 @@
 
             <!-- Emergency Support Banner -->
             <div class="mt-4 p-3 bg-red-900/30 border border-red-700/30 rounded-lg">
-              <div class="text-sm text-red-400 font-medium mb-1">Emergency Response</div>
-              <div class="text-xs text-gray-400">Help families affected by recent disasters</div>
-              <router-link 
-                to="/emergency"
-                @click="isMobileMenuOpen = false"
-                class="inline-block mt-2 text-xs text-red-400 hover:text-red-300 underline"
-              >
-                Learn More →
-              </router-link>
+              <div class="flex items-start">
+                <svg class="w-5 h-5 text-red-400 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+                <div>
+                  <div class="text-sm text-red-400 font-medium mb-1">Emergency Medical Response</div>
+                  <div class="text-xs text-gray-400">Critical medical supplies needed for disaster relief</div>
+                  <router-link 
+                    to="/emergency"
+                    @click="isMobileMenuOpen = false"
+                    class="inline-flex items-center mt-2 text-xs text-red-400 hover:text-red-300 group"
+                  >
+                    <span class="border-b border-transparent group-hover:border-red-400 transition-colors">View Urgent Needs</span>
+                    <svg class="w-3.5 h-3.5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </router-link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

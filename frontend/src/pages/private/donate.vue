@@ -1,14 +1,14 @@
 <template>
   <div class="min-h-screen text-white relative">
     <!-- Background image slideshow with fixed position and darkening overlay -->
-    
+
     <div class="fixed inset-0 z-0">
       <div class="absolute inset-0 bg-black opacity-40"></div>
       <transition-group name="fade" tag="div" class="relative w-full h-full">
-       
+
       </transition-group>
     </div>
-    
+
 
     <!-- Hero Section -->
     <section class="relative bg-transparent pt-24 pb-12 sm:pt-32 sm:pb-16 z-40">
@@ -29,49 +29,33 @@
       <div class="container mx-auto px-4 sm:px-6">
         <div class="max-w-xl mx-auto">
           <div class="relative z-40 min-h-[400px]">
-            <h2 class="text-3xl font-bold text-white mb-8 text-shadow-md" id="donation-form-heading">Make a Donation (Franc CFA)</h2>
+            <h2 class="text-3xl font-bold text-white mb-8 text-shadow-md" id="donation-form-heading">Make a Donation
+              (Franc CFA)</h2>
             <form @submit.prevent="submitForm" class="space-y-6" aria-labelledby="donation-form-heading">
               <!-- Donation Amount (F CFA) -->
               <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2" for="amount">Donation Amount (F CFA) *</label>
+                <label class="block text-sm font-medium text-gray-300 mb-2" for="amount">Donation Amount (F CFA)
+                  *</label>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
-                  <button
-                    v-for="option in amountOptions"
-                    :key="option"
-                    type="button"
-                    @click="form.amount = option"
+                  <button v-for="option in amountOptions" :key="option" type="button" @click="form.amount = option"
                     class="px-4 py-2 rounded-lg bg-gray-700/50 hover:bg-gray-600/50 focus:ring-2 focus:ring-yellow-400 focus:outline-none transition-all"
-                    :class="{ 'bg-yellow-400 text-gray-900 font-semibold': form.amount === option }"
-                  >
+                    :class="{ 'bg-yellow-400 text-gray-900 font-semibold': form.amount === option }">
                     {{ formatCfa(option) }}
                   </button>
                 </div>
-                <input
-                  v-model="form.amount"
-                  id="amount"
-                  type="number"
-                  required
-                  min="100"
-                  step="1"
+                <input v-model="form.amount" id="amount" type="number" required min="100" step="1"
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="Enter amount in F CFA"
-                  :aria-invalid="formErrors.amount ? 'true' : 'false'"
-                  @input="clearError('amount')"
-                />
+                  placeholder="Enter amount in F CFA" :aria-invalid="formErrors.amount ? 'true' : 'false'"
+                  @input="clearError('amount')" />
                 <p v-if="formErrors.amount" class="text-red-400 text-sm mt-1">{{ formErrors.amount }}</p>
               </div>
 
               <!-- Payment Method (Mobile Money) -->
               <div>
                 <label class="block text-sm font-medium text-gray-300 mb-2" for="paymentMethod">Payment Method *</label>
-                <select
-                  v-model="form.paymentMethod"
-                  id="paymentMethod"
-                  required
+                <select v-model="form.paymentMethod" id="paymentMethod" required
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white appearance-none"
-                  :aria-invalid="formErrors.paymentMethod ? 'true' : 'false'"
-                  @change="clearError('paymentMethod')"
-                >
+                  :aria-invalid="formErrors.paymentMethod ? 'true' : 'false'" @change="clearError('paymentMethod')">
                   <option value="" disabled selected>Select a method</option>
                   <option value="orange_money">Orange Money</option>
                   <option value="mobile_money">Mobile Money</option>
@@ -82,74 +66,52 @@
               <!-- Donor Information -->
               <div>
                 <label class="block text-sm font-medium text-gray-300 mb-2" for="name">Full Name *</label>
-                <input
-                  v-model="form.name"
-                  id="name"
-                  type="text"
-                  required
+                <input v-model="form.name" id="name" type="text" required
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="Enter your full name"
-                  :aria-invalid="formErrors.name ? 'true' : 'false'"
-                  @input="clearError('name')"
-                />
+                  placeholder="Enter your full name" :aria-invalid="formErrors.name ? 'true' : 'false'"
+                  @input="clearError('name')" />
                 <p v-if="formErrors.name" class="text-red-400 text-sm mt-1">{{ formErrors.name }}</p>
               </div>
 
               <div>
                 <label class="block text-sm font-medium text-gray-300 mb-2" for="email">Email *</label>
-                <input
-                  v-model="form.email"
-                  id="email"
-                  type="email"
-                  required
+                <input v-model="form.email" id="email" type="email" required
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="your.email@example.cm"
-                  :aria-invalid="formErrors.email ? 'true' : 'false'"
-                  @input="clearError('email')"
-                />
+                  placeholder="your.email@example.cm" :aria-invalid="formErrors.email ? 'true' : 'false'"
+                  @input="clearError('email')" />
                 <p v-if="formErrors.email" class="text-red-400 text-sm mt-1">{{ formErrors.email }}</p>
               </div>
 
               <!-- Phone Number for Mobile Money -->
               <div>
                 <label class="block text-sm font-medium text-gray-300 mb-2" for="phone">Phone Number *</label>
-                <input
-                  v-model="form.phone"
-                  id="phone"
-                  type="tel"
-                  required
+                <input v-model="form.phone" id="phone" type="tel" required
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="+237 650 000 000"
-                  :aria-invalid="formErrors.phone ? 'true' : 'false'"
-                  @input="clearError('phone')"
-                />
+                  placeholder="+237 650 000 000" :aria-invalid="formErrors.phone ? 'true' : 'false'"
+                  @input="clearError('phone')" />
                 <p v-if="formErrors.phone" class="text-red-400 text-sm mt-1">{{ formErrors.phone }}</p>
               </div>
 
               <!-- Optional Message -->
               <div>
                 <label class="block text-sm font-medium text-gray-300 mb-2" for="message">Message (Optional)</label>
-                <textarea
-                  v-model="form.message"
-                  id="message"
-                  rows="3"
+                <textarea v-model="form.message" id="message" rows="3"
                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="Add a note with your donation"
-                ></textarea>
+                  placeholder="Add a note with your donation"></textarea>
               </div>
 
               <!-- Submit Button -->
               <div>
-                <button
-                  type="submit"
-                  :disabled="isSubmitting"
-                  class="w-full px-6 py-3 bg-yellow-400 hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 font-semibold rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg"
-                >
+                <button type="submit" :disabled="isSubmitting"
+                  class="w-full px-6 py-3 bg-yellow-400 hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 font-semibold rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg">
                   <span v-if="!isSubmitting">Donate Now</span>
                   <span v-else class="flex items-center justify-center">
-                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-900" xmlns="http://www.w3.org/2000/svg"
+                      fill="none" viewBox="0 0 24 24">
                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                      </path>
                     </svg>
                     Processing...
                   </span>
@@ -157,13 +119,12 @@
               </div>
 
               <!-- Success Message -->
-              <div 
-                v-if="showSuccess"
-                class="mt-6 p-4 bg-green-900/50 border border-green-700 rounded-lg"
-              >
+              <div v-if="showSuccess" class="mt-6 p-4 bg-green-900/50 border border-green-700 rounded-lg">
                 <div class="flex items-center">
-                  <svg class="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg class="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <p class="text-green-400 font-medium">Donation successful! Thank you for your support!</p>
                 </div>
@@ -183,8 +144,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue';
-import api from '../../lib/api'
+import { nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue';
+import api from '../../lib/api';
 
 // Slideshow images from ContactPage.vue
 // const images = ref([
@@ -195,29 +156,72 @@ import api from '../../lib/api'
 
 const imagesLoaded = ref(false);
 const currentImageIndex = ref(0);
+let slideInterval = null;
 
 const changeImage = () => {
-  currentImageIndex.value = (currentImageIndex.value + 1) % images.value.length;
+  // Only change image if component is still mounted
+  if (slideInterval) {
+    currentImageIndex.value = (currentImageIndex.value + 1) % images.value.length;
+  }
 };
 
-onMounted(() => {
-  let loadedCount = 0;
-  images.value.forEach((image, index) => {
-    const img = new Image();
-    img.src = image.src;
-    img.onload = () => {
-      images.value[index].loaded = true;
-      loadedCount++;
-      if (loadedCount === images.value.length) imagesLoaded.value = true;
-    };
-    img.onerror = () => {
-      images.value[index].loaded = false;
-      loadedCount++;
-      if (loadedCount === images.value.length) imagesLoaded.value = true;
-    };
-  });
-  const intervalId = setInterval(changeImage, 5000);
-  onUnmounted(() => clearInterval(intervalId));
+const startSlideshow = () => {
+  if (slideInterval) {
+    clearInterval(slideInterval);
+  }
+  slideInterval = setInterval(changeImage, 5000);
+};
+
+const stopSlideshow = () => {
+  if (slideInterval) {
+    clearInterval(slideInterval);
+    slideInterval = null;
+  }
+};
+
+onMounted(async () => {
+  // Wait for next tick to ensure component is fully mounted
+  await nextTick();
+
+  // Only start slideshow if images array exists and has items
+  if (images?.value?.length > 0) {
+    let loadedCount = 0;
+    images.value.forEach((image, index) => {
+      const img = new Image();
+      img.src = image.src;
+      img.onload = () => {
+        images.value[index].loaded = true;
+        loadedCount++;
+        if (loadedCount === images.value.length) {
+          imagesLoaded.value = true;
+          startSlideshow();
+        }
+      };
+      img.onerror = () => {
+        images.value[index].loaded = false;
+        loadedCount++;
+        if (loadedCount === images.value.length) {
+          imagesLoaded.value = true;
+          startSlideshow();
+        }
+      };
+    });
+  }
+});
+
+onBeforeUnmount(() => {
+  // Clean up interval before component unmounts
+  stopSlideshow();
+
+  // Clean up any pending timeouts
+  const timeouts = [];
+  window.clearTimeout && timeouts.forEach(timeout => clearTimeout(timeout));
+
+  // Reset reactive state to prevent memory leaks
+  showSuccess.value = false;
+  serverMessage.value = '';
+  serverError.value = '';
+  isSubmitting.value = false;
 });
 
 // Form data and validation
@@ -242,8 +246,8 @@ const formErrors = reactive({
 
 const isSubmitting = ref(false);
 const showSuccess = ref(false);
-const serverMessage = ref('')
-const serverError = ref('')
+const serverMessage = ref('');
+const serverError = ref('');
 
 const validateForm = () => {
   let isValid = true;
@@ -262,15 +266,17 @@ const clearError = (field) => {
 };
 
 const submitForm = async () => {
-  serverMessage.value = ''
-  serverError.value = ''
+  serverMessage.value = '';
+  serverError.value = '';
+
   if (!validateForm()) return;
 
   isSubmitting.value = true;
+
   try {
     // Normalize phone to MSISDN. If it doesn't start with country code, prepend 237 (Cameroon) as typical for XAF context.
-    const digits = String(form.phone || '').replace(/\D/g, '')
-    const msisdn = digits.startsWith('237') ? digits : `237${digits}`
+    const digits = String(form.phone || '').replace(/\D/g, '');
+    const msisdn = digits.startsWith('237') ? digits : `237${digits}`;
 
     const payload = {
       amount: String(form.amount),
@@ -278,18 +284,24 @@ const submitForm = async () => {
       description: form.message?.trim() || `Donation by ${form.name}`,
       reference: `don-${Date.now()}`,
       currency: 'XAF',
-    }
+    };
 
-    const { data } = await api.post('/payments/campay/collect', payload)
+    const { data } = await api.post('/payments/campay/collect', payload);
     // Expect provider_response in payload per backend
-    showSuccess.value = true
-    serverMessage.value = data?.provider_response ? JSON.stringify(data.provider_response) : 'Payment request sent. Follow instructions on your phone to approve.'
+    showSuccess.value = true;
+    serverMessage.value = data?.provider_response ? JSON.stringify(data.provider_response) : 'Payment request sent. Follow instructions on your phone to approve.';
     resetForm();
-    setTimeout(() => { showSuccess.value = false; serverMessage.value = '' }, 8000)
+
+    // Use setTimeout with proper cleanup
+    const successTimeout = setTimeout(() => {
+      showSuccess.value = false;
+      serverMessage.value = '';
+    }, 8000);
+
   } catch (err) {
-    console.error('Error submitting donation:', err)
-    const msg = err?.response?.data || err?.message || 'Payment failed'
-    serverError.value = typeof msg === 'string' ? msg : JSON.stringify(msg)
+    console.error('Error submitting donation:', err);
+    const msg = err?.response?.data || err?.message || 'Payment failed';
+    serverError.value = typeof msg === 'string' ? msg : JSON.stringify(msg);
   } finally {
     isSubmitting.value = false;
   }
@@ -343,7 +355,8 @@ function formatCfa(value) {
 input:focus,
 select:focus,
 button:focus {
-  outline: 2px solid #facc15; /* Tailwind yellow-400 */
+  outline: 2px solid #facc15;
+  /* Tailwind yellow-400 */
   outline-offset: 2px;
 }
 
