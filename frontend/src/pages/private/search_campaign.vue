@@ -170,7 +170,8 @@
             </div>
 
             <!-- Action Button -->
-            <button @click="donateToCampaign(campaign.id)"
+            <router-link @click="donateToCampaign(campaign.id)"
+            to="/admin/donate"
               class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 shadow-lg"
               :disabled="campaign.status !== 'active'" :class="{
                 'opacity-50 cursor-not-allowed': campaign.status !== 'active',
@@ -178,7 +179,7 @@
               }">
               {{ campaign.status === 'active' ? 'Donate Now' : campaign.status === 'upcoming' ? 'Notify Me' :
               'Completed' }}
-            </button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -388,7 +389,7 @@ async function fetchApprovedCampaigns() {
       status: 'active',
       goal: Number(c.target_amount || 0),
       raised: 0,
-      image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80',
+      image: 'https://generosityglobal.org/wp-content/uploads/2023/05/untitled-536-1-scaled.jpg',
       donors: [],
       endDate: c.end_date,
       isFavorite: false,
