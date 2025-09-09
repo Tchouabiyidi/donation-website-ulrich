@@ -18,7 +18,7 @@ function getApiBaseUrl() {
   }
 
   // Production default (Render backend)
-  return 'https://donation-website-ulrich-3.onrender.com/api'
+  return 'https://donation-website-ulrich.onrender.com/api'
 }
 
 const api = axios.create({
