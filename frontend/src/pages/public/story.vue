@@ -140,7 +140,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const images = ref([
   { src: 'https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg', loaded: false }, // Volunteers distributing aid
   { src: 'https://images.pexels.com/photos/6646987/pexels-photo-6646987.jpeg', loaded: false }, // Humanitarian aid delivery
-  { src: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg', loaded: false }, // Community support and aid
+  { src: 'https://generosityglobal.org/wp-content/uploads/2023/05/untitled-536-1-scaled.jpg', loaded: false }, // Community support and aid
 ]);
 
 const imagesLoaded = ref(false);

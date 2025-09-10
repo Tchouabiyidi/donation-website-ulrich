@@ -37,8 +37,15 @@
             >
               Signup
             </router-link>
+            <router-link 
+             to="/login" 
+             class="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 lg:px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-200 transform hover:scale-105 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/60"
+           >
+             Login
+           </router-link>
           </div>
 
+          
           <!-- Mobile menu button -->
           <button 
             @click="toggleMobile()"

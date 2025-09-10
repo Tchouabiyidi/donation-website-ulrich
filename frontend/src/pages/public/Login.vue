@@ -147,9 +147,9 @@ import { useUserStore } from '../../stores/user'
 
 // Slideshow images with Black people in African backgrounds
 const images = ref([
-  { src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80', loaded: false }, // Maasai woman
-  { src: 'https://images.pexels.com/photos/247851/pexels-photo-247851.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', loaded: false }, // Group in traditional attire
-  { src: 'https://images.unsplash.com/photo-1503614472-8d36e1c1d7f6?auto=format&fit=crop&q=80', loaded: false }, // Rural African village scene
+{ src: 'https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg', loaded: false }, // Volunteers distributing aid
+  { src: 'https://images.pexels.com/photos/6646987/pexels-photo-6646987.jpeg', loaded: false }, // Humanitarian aid delivery
+  { src: 'https://generosityglobal.org/wp-content/uploads/2023/05/untitled-536-1-scaled.jpg', loaded: false }, // Community support and aid
 ]);
 
 const imagesLoaded = ref(false);
